@@ -18,7 +18,38 @@ app.use(cors({
 
 app.use(express.json());
 
-// Stripe webhook route - usa bodyParser.raw per il parsing corretto
+// ✅ Route per creare una sessione di pagamento Stripe
+app.post("/create-checkout-session", async (req, res) => {
+  console.log("✅ Richiesta ricevuta su /create-checkout-session");
+
+  try {
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      mode: 'payment',
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: 'Pagamento di test',
+            },
+            unit_amount: 500,
+          },
+          quantity: 1,
+        },
+      ],
+      success_url: "http://timeless.altervista.org/successo.html",
+      cancel_url: "http://timeless.altervista.org/annullato.html",
+    });
+
+    res.json({ id: session.id });
+  } catch (err) {
+    console.error("❌ Errore durante la creazione della sessione:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// ✅ Route per gestire i Webhook Stripe
 app.post("/webhook", bodyParser.raw({ type: "application/json" }), (req, res) => {
   const sig = req.headers["stripe-signature"];
   let event;
@@ -43,5 +74,5 @@ app.post("/webhook", bodyParser.raw({ type: "application/json" }), (req, res) =>
 });
 
 app.listen(PORT, () => {
-  console.log(`Server avviato sulla porta ${PORT}`);
+  console.log(`🚀 Server avviato sulla porta ${PORT}`);
 });
