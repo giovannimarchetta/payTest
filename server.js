@@ -2,12 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 
-if (!process.env.STRIPE_SECRET_KEY) {
-  console.error("⚠️ STRIPE_SECRET_KEY non trovata nelle variabili d'ambiente");
+if (!process.env.sk_test_51Ro6v8CbWJ1FIoMScixPJpAwNNc2pmB4GXwEJNJZfJx5KdFZpPkHlBXkBVL4ANG5wXuNCBegxb9bRDprzQ2sc0nb0061zeUy6g) {
+  console.error("⚠️ sk_test_51Ro6v8CbWJ1FIoMScixPJpAwNNc2pmB4GXwEJNJZfJx5KdFZpPkHlBXkBVL4ANG5wXuNCBegxb9bRDprzQ2sc0nb0061zeUy6g non trovata nelle variabili d'ambiente");
   process.exit(1);
 }
 
-const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.sk_test_51Ro6v8CbWJ1FIoMScixPJpAwNNc2pmB4GXwEJNJZfJx5KdFZpPkHlBXkBVL4ANG5wXuNCBegxb9bRDprzQ2sc0nb0061zeUy6g);
 
 const app = express();
 const PORT = process.env.PORT || 3000;
