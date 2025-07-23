@@ -13,7 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: "https://timeless.altervista.org"
+  origin: ["http://timeless.altervista.org", "https://timeless.altervista.org"]
 }));
 
 app.use(express.json());
