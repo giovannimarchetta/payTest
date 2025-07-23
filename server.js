@@ -64,8 +64,8 @@ app.post("/create-checkout-session", async (req, res) => {
           quantity: 1
         }
       ],
-      success_url: "https://timeless.altervista.org/successo.html",
-      cancel_url: "https://timeless.altervista.org/annullato.html"
+      success_url: "https://timeless.altervista.org/success.html",
+      cancel_url: "https://timeless.altervista.org/cancel.html"
     });
 
     res.json({ id: session.id });
