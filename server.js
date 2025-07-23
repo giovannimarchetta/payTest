@@ -6,7 +6,7 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const app = express();
 
 app.use(cors({
-	origin: "https://frisiawards.altervista.org"
+	origin: "https://timeless.altervista.org"
 }));
 
 app.use(express.static("public"));
@@ -28,8 +28,8 @@ app.post("/create-checkout-session", async (req, res) => {
 				},
 				quantity: 1,
 			}],
-			success_url: "https://frisiawards.altervista.org/success.html",
-			cancel_url: "https://frisiawards.altervista.org/cancel.html",
+			success_url: "https://timeless.altervista.org/success.html",
+			cancel_url: "https://timeless.altervista.org/cancel.html",
 		});
 
 		console.log("✅ Sessione Stripe creata con ID:", session.id);
