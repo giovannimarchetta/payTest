@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="it">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Pagamento Stripe</title>
+		<script src="https://js.stripe.com/v3/"></script>
+		<style>
+			body {
+				margin: 0px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 100vh;
+			}
+
+			button {
+				border: none;
+				background-color: black;
+				border-radius: 100px;
+				color: white;
+				font-size: 20px;
+				font-weight: 600;
+				padding: 15px;
+				padding-left: 35px;
+				padding-right: 35px;
+			}
+		</style>
+	</head>
+	<body>
+		<button id="checkout-button">Paga ora</button>
+		<script>
+			const stripe = Stripe("pk_test_51Ro6v8CbWJ1FIoMSRXEeEOouNiCeHQoyQkjpqeCKAkntVqqsIQJzCz6Jw7sSSYBDrKGbHSUH7IXXE8HVGDF1lgq000zbRRiun1");
+
+			document.getElementById("checkout-button").addEventListener("click", async () => {
+			try {
+				const response = await fetch("https://paytest-lb91.onrender.com/create-checkout-session", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				}
+				});
+
+				if (!response.ok) {
+				throw new Error("Errore nella creazione della sessione");
+				}
+
+				const session = await response.json();
+
+				const result = await stripe.redirectToCheckout({ sessionId: session.id });
+
+				if (result.error) {
+				alert(result.error.message);
+				}
+			} catch (err) {
+				console.error("❌ Errore:", err);
+				alert("Errore nel pagamento. Riprova.");
+			}
+			});
+		</script>
+	</body>
+</html>
